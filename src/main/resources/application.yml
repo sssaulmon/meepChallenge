@@ -1,0 +1,22 @@
+app:
+  resources:
+    uri: https://apidev.meep.me/tripplan/api/v1/routers/lisboa/resources
+fixedDelay:
+  in:
+    milliseconds: 30000
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:meepdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database:
+      platform: h2
+    hibernate:
+      ddl-auto: create
+  h2:
+    console:
+      enabled: true
+      path: /console
