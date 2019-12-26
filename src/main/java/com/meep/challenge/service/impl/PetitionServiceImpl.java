@@ -20,8 +20,9 @@ public class PetitionServiceImpl implements PetitionService {
 
   @Override
   public Petition load(String lowerLeftLocation, String upperRightLocation, String companyIds) {
-    return petitionRepository.findTopByLowerLeftLocationAndUpperRightLocationAndCompanyIds(lowerLeftLocation,
-      upperRightLocation, companyIds);
+    return petitionRepository.
+      findTopByLowerLeftLocationAndUpperRightLocationAndCompanyIdsOrderByDateDesc(lowerLeftLocation,
+        upperRightLocation, companyIds);
   }
 
   @Override

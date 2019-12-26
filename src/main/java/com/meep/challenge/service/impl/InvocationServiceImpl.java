@@ -5,8 +5,8 @@ import com.meep.challenge.dto.ResourceDTO;
 import com.meep.challenge.model.Petition;
 import com.meep.challenge.model.PetitionResource;
 import com.meep.challenge.model.Resource;
-import com.meep.challenge.repository.PetitionResourceRepository;
 import com.meep.challenge.service.InvocationService;
+import com.meep.challenge.service.PetitionResourceService;
 import com.meep.challenge.service.PetitionService;
 import com.meep.challenge.service.ResourceService;
 import org.modelmapper.ModelMapper;
@@ -29,15 +29,11 @@ import java.util.stream.Stream;
 public class InvocationServiceImpl implements InvocationService {
   private Logger logger = LoggerFactory.getLogger(InvocationServiceImpl.class);
 
-  private static final String LOWER_LEFT_LOCATION_FIELD = "lowerLeftLatLon";
-  private static final String UPPER_RIGHT_LOCATION_FIELD = "upperRightLatLon";
-  private static final String COMPANY_ZONE_IDS_FIELD = "companyZoneIds";
-
   @Value("${app.resources.uri}") private String resourcesUri;
   @Autowired private RestTemplate restTemplate;
   @Autowired private PetitionService petitionService;
   @Autowired private ResourceService resourceService;
-  @Autowired private PetitionResourceRepository repository;
+  @Autowired private PetitionResourceService petitionResourceService;
   @Autowired private ModelMapper modelMapper;
 
 
@@ -73,7 +69,7 @@ public class InvocationServiceImpl implements InvocationService {
   private Petition calculateDifferences(Petition petition, ResourceDTO[] newResources) {
     List<Resource> oldResources = Optional.ofNullable(petitionService.load(petition.getLowerLeftLocation(),
       petition.getUpperRightLocation(), petition.getCompanyIds()))
-      .map(p -> repository.findResourceByPetition(p))
+      .map(p -> petitionResourceService.findResourceByPetition(p))
       .orElseGet(ArrayList::new);
 
     petitionService.savePetition(petition);
@@ -118,7 +114,7 @@ public class InvocationServiceImpl implements InvocationService {
     Optional.of(save)
       .map(b -> resourceService.saveResource(resource));
 
-    repository.save(new PetitionResource()
+    petitionResourceService.save(new PetitionResource()
       .status(status.getValue())
       .petition(petition)
       .resource(resource));

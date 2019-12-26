@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface PetitionRepository extends JpaRepository<Petition, Long> {
 
-  Petition findTopByLowerLeftLocationAndUpperRightLocationAndCompanyIds(String lowerLeftLocation,
+  Petition findTopByLowerLeftLocationAndUpperRightLocationAndCompanyIdsOrderByDateDesc(String lowerLeftLocation,
                                                                         String upperRightLocation, String companyIds);
 
   List<Petition> findByDateBetween(LocalDateTime fromDate, LocalDateTime toDate);

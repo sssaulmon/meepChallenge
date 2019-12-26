@@ -18,6 +18,11 @@ public class PetitionResourceServiceImpl implements PetitionResourceService {
   @Autowired private PetitionRepository petitionRepository;
 
   @Override
+  public PetitionResource save(PetitionResource petitionResource) {
+    return repository.save(petitionResource);
+  }
+
+  @Override
   public List<Resource> findResourceByPetition(Petition petition) {
     return repository.findResourceByPetition(petition);
   }

@@ -7,8 +7,9 @@ import com.meep.challenge.model.Resource;
 import java.util.List;
 
 public interface PetitionResourceService {
+  PetitionResource save(PetitionResource pe);
 
   List<Resource> findResourceByPetition(Petition petition);
-  List<PetitionResource> findByPetition(Long petitionId);
 
+  List<PetitionResource> findByPetition(Long petitionId);
 }
